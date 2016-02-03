@@ -34,11 +34,12 @@ Must be inside a function, and start must be adjacent to the argument name
 
 */
 
-app.directive('timelionExpression', function ($compile, $http, $timeout, $rootScope, config) {
+app.directive('timelionExpression', function ($compile, $timeout, $rootScope, config, Private) {
   return {
     restrict: 'A',
     require: 'ngModel',
     link: function ($scope, $elem, $attrs, ngModelCtrl) {
+      var api = Private(require('../services/api'));
 
       var keys = {
         ESC: 27,
@@ -65,7 +66,7 @@ app.directive('timelionExpression', function ($compile, $http, $timeout, $rootSc
         });
 
         $elem.after($compile(template)($scope));
-        $http.get('timelion/functions').then(function (resp) {
+        api.functions().then(function (resp) {
           functionReference.byName = _.indexBy(resp.data, 'name');
           functionReference.list = resp.data;
         });

@@ -4,11 +4,13 @@ define(function (require) {
   var _ = require('lodash');
   var moment = require('moment');
 
-  app.directive('timelionDocs', function (config, $http) {
+  app.directive('timelionDocs', function () {
     return {
       restrict: 'E',
       template: html,
-      controller: function ($scope, config) {
+      controller: function ($scope, config, Private) {
+        var api = Private(require('../services/api'));
+
         $scope.section = config.get('timelion:showTutorial', true) ? 'tutorial' : 'functions';
         $scope.page = 1;
         $scope.functions = {
@@ -25,7 +27,7 @@ define(function (require) {
         };
 
         function getFunctions() {
-          return $http.get('timelion/functions').then(function (resp) {
+          return api.functions().then(function (resp) {
             $scope.functions.list = resp.data;
           });
         }
@@ -37,7 +39,7 @@ define(function (require) {
         };
 
         function checkElasticsearch() {
-          return $http.get('timelion/validate/es').then(function (resp) {
+          return api.validateWithEs().then(function (resp) {
             if (resp.data.ok) {
 
               $scope.es.valid = true;
