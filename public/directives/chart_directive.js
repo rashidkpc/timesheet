@@ -21,6 +21,7 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
     },
     link: function ($scope, $elem) {
       var timezone = Private(require('plugins/timelion/services/timezone'))();
+      var tickFormatters = require('plugins/timelion/services/tick_formatters')();
 
       $scope.search = $scope.search || _.noop;
 
@@ -129,7 +130,7 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
         if (pos.x < axes.xaxis.min || pos.x > axes.xaxis.max) {
           return;
         }
-
+        //alert(JSON.stringify(axes));
         var i;
         var j;
         var dataset = plot.getData();
@@ -153,7 +154,12 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
           }
 
           if (y != null) {
-            legendValueNumbers.eq(i).text('(' + y.toFixed(precision) + ')');
+            if (axes.yaxis.options._units !== undefined && tickFormatters[axes.yaxis.options._units[0]] !== undefined) {
+              legendValueNumbers.eq(i).text('(' + tickFormatters[axes.yaxis.options._units[0]](y,axes.yaxis) + ')');
+            }
+            else {
+              legendValueNumbers.eq(i).text('(' + y.toFixed(precision) + ')');
+            }
           } else {
             legendValueNumbers.eq(i).empty();
           }
@@ -197,7 +203,15 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
           }
 
           if (series._global) {
+            //alert(JSON.stringify(options));
+            //alert(JSON.stringify(series._global));
             _.merge(options, series._global);
+
+            _.forEach(options.yaxes, function (yaxis) {
+              if (yaxis && yaxis._units !== undefined && tickFormatters[yaxis._units[0]] !== undefined) {
+                yaxis.tickFormatter = tickFormatters[yaxis._units[0]];
+              }
+            });
           }
 
           return series;
