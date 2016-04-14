@@ -154,12 +154,7 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
           }
 
           if (y != null) {
-            if (axes.yaxis.options._units !== undefined && tickFormatters[axes.yaxis.options._units[0]] !== undefined) {
-              legendValueNumbers.eq(i).text('(' + tickFormatters[axes.yaxis.options._units[0]](y,axes.yaxis) + ')');
-            }
-            else {
-              legendValueNumbers.eq(i).text('(' + y.toFixed(precision) + ')');
-            }
+            legendValueNumbers.eq(i).text('(' + series.yaxis.tickFormatter(y.toFixed(precision),series.yaxis) + ')');
           } else {
             legendValueNumbers.eq(i).empty();
           }
