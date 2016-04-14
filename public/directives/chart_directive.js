@@ -130,7 +130,7 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
         if (pos.x < axes.xaxis.min || pos.x > axes.xaxis.max) {
           return;
         }
-        //alert(JSON.stringify(axes));
+
         var i;
         var j;
         var dataset = plot.getData();
@@ -198,8 +198,6 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
           }
 
           if (series._global) {
-            //alert(JSON.stringify(options));
-            //alert(JSON.stringify(series._global));
             _.merge(options, series._global);
 
             _.forEach(options.yaxes, function (yaxis) {
