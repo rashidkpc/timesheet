@@ -2,7 +2,7 @@ var alter = require('../lib/alter.js');
 var _ = require('lodash');
 var Chainable = require('../lib/classes/chainable');
 
-var tickFormatters = {'bits':'bits','bits/s':'bits/s','bytes':'bytes','bytes/s':'bytes/s','currency':'currency(:prefix)'}
+var tickFormatters = {'bits':'bits','bits/s':'bits/s','bytes':'bytes','bytes/s':'bytes/s','currency':'currency(:prefix)','custom':'custom(:prefix:suffix)'}
 
 module.exports = new Chainable('yaxis', {
   args: [
@@ -43,7 +43,11 @@ module.exports = new Chainable('yaxis', {
       eachSeries.yaxis = yaxis;
       eachSeries._global = eachSeries._global || {};
 
-      var yaxes = eachSeries._global.yaxes = eachSeries._global.yaxes || [{},{}];
+      var yaxes = eachSeries._global.yaxes = eachSeries._global.yaxes || [];
+      for (var i = 0 ; i < yaxis-1 ; i++)
+      {
+        yaxes[i] = {};
+      }
       var myAxis = yaxes[yaxis - 1] = yaxes[yaxis - 1] || {};
       myAxis.position = position;
       myAxis.min = min == null ? 0 : min;
