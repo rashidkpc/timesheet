@@ -49,6 +49,11 @@ define(function (require) {
         return p + ' ' + s + (j ? i.substr(0, j) + t : '') +
         i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + t) +
         (c ? d + Math.abs(val - i).toFixed(c).slice(2) : '');
+      },
+      'custom': function (val, axis) {
+        var p = axis.options._units[1] || '';
+        var s = axis.options._units[2] || '';
+        return p + val + s;
       }
     };
 
