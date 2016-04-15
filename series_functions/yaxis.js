@@ -44,20 +44,17 @@ module.exports = new Chainable('yaxis', {
       eachSeries._global = eachSeries._global || {};
 
       var yaxes = eachSeries._global.yaxes = eachSeries._global.yaxes || [];
-      for (var i = 0 ; i < yaxis-1 ; i++)
-      {
-        yaxes[i] = {};
-      }
+      _.times(yaxis-1,function(idx){
+        yaxes[idx] = {};
+      });
       var myAxis = yaxes[yaxis - 1] = yaxes[yaxis - 1] || {};
       myAxis.position = position;
       myAxis.min = min == null ? 0 : min;
       myAxis.max = max;
 
-      if (units !== null && units !== undefined)
-      {
+      if (units !== null && units !== undefined) {
         var unitTokens = units.split(':');
-        if (tickFormatters[unitTokens[0]] === undefined)
-        {
+        if (tickFormatters[unitTokens[0]] === undefined) {
           throw new Error ('`'+units+'` is not a supported unit type.');
         }
         myAxis._units = unitTokens;
