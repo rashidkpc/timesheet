@@ -17,17 +17,24 @@ module.exports = new Chainable('label', {
       name: 'regex',
       types: ['string', 'null'],
       help: 'A regex with capture group support'
-    }
+    },
+    {
+      name: 'valueFormat',
+      types: ['string','null'],
+      help: 'Format for displaying values in the label. Use %x and %y for raw x and y values, or %X and %Y for formatted x and y values. default = \'(%Y)\''
+    },
   ],
   help: 'Change the label of the series. Use %s reference the existing label',
   fn:  function labelFn(args) {
     var config = args.byName;
-    return alter(args, function (eachSeries) {
+    return alter(args, function (eachSeries,label,regex,valueFormat) {
       if (config.regex) {
         eachSeries.label = eachSeries.label.replace(new RegExp(config.regex), config.label);
       } else {
         eachSeries.label = config.label;
       }
+
+      eachSeries.valueFormat = valueFormat || '(%Y)';
 
       return eachSeries;
     });
