@@ -31,6 +31,11 @@ module.exports = new Chainable('yaxis', {
       help: 'left or right'
     },
     {
+      name: 'ticks',
+      types: ['number', 'null'],
+      help: 'Specify the number of y-axis ticks'
+    },
+    {
       name: 'units',
       types: ['string', 'null'],
       help: 'The function to use for formatting y-axis labels. One of: ' + _.values(tickFormatters).join(', ')
@@ -38,7 +43,7 @@ module.exports = new Chainable('yaxis', {
   ],
   help: 'Configures a variety of y-axis options, the most important likely being the ability to add an Nth (eg 2nd) y-axis',
   fn: function yaxisFn(args) {
-    return alter(args, function (eachSeries, yaxis, min, max, position, units) {
+    return alter(args, function (eachSeries, yaxis, min, max, position, ticks, units) {
       yaxis = yaxis || 1;
       eachSeries.yaxis = yaxis;
       eachSeries._global = eachSeries._global || {};
@@ -51,6 +56,7 @@ module.exports = new Chainable('yaxis', {
       myAxis.position = position;
       myAxis.min = min == null ? 0 : min;
       myAxis.max = max;
+      myAxis.ticks = ticks;
 
       if (units !== null && units !== undefined) {
         var unitTokens = units.split(':');
