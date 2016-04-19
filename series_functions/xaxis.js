@@ -11,7 +11,7 @@ module.exports = new Chainable('xaxis', {
     {
       name: 'ticks',
       types: ['number', 'null'],
-      help: 'Specify the number of y-axis ticks'
+      help: 'Specify the number of x-axis ticks'
     },
     {
       name: 'format',
