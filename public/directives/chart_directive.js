@@ -202,9 +202,6 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
             series.label = '(hidden) ' + series.label;
           }
 
-          console.log('options:',options);
-          console.log('series:',series);
-        //  _.merge(options, series._);
           if (series._global) {
             _.merge(options, series._global);
 
