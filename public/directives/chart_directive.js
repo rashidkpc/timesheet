@@ -154,7 +154,12 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
           }
 
           if (y != null) {
-            legendValueNumbers.eq(i).text('(' + series.yaxis.tickFormatter(y.toFixed(precision),series.yaxis) + ')');
+            var valueLabel = series.valueFormat
+              .replace('%x',pos.x)
+              .replace('%X',series.xaxis.tickFormatter(pos.x,series.xaxis))
+              .replace('%y',y.toFixed(precision))
+              .replace('%Y',series.yaxis.tickFormatter(y.toFixed(precision),series.yaxis));
+            legendValueNumbers.eq(i).text(valueLabel);
           } else {
             legendValueNumbers.eq(i).empty();
           }
@@ -197,6 +202,9 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
             series.label = '(hidden) ' + series.label;
           }
 
+          console.log('options:',options);
+          console.log('series:',series);
+        //  _.merge(options, series._);
           if (series._global) {
             _.merge(options, series._global);
 
