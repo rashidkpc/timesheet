@@ -21,6 +21,7 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
     },
     link: function ($scope, $elem) {
       var timezone = Private(require('plugins/timelion/services/timezone'))();
+      var tickFormatters = require('plugins/timelion/services/tick_formatters')();
 
       $scope.search = $scope.search || _.noop;
 
@@ -153,7 +154,7 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
           }
 
           if (y != null) {
-            legendValueNumbers.eq(i).text('(' + y.toFixed(precision) + ')');
+            legendValueNumbers.eq(i).text('(' + series.yaxis.tickFormatter(y.toFixed(precision),series.yaxis) + ')');
           } else {
             legendValueNumbers.eq(i).empty();
           }
@@ -198,6 +199,12 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
 
           if (series._global) {
             _.merge(options, series._global);
+
+            _.forEach(options.yaxes, function (yaxis) {
+              if (yaxis && yaxis._units !== undefined && tickFormatters[yaxis._units[0]] !== undefined) {
+                yaxis.tickFormatter = tickFormatters[yaxis._units[0]];
+              }
+            });
           }
 
           return series;
