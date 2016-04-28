@@ -1,10 +1,7 @@
 var _ = require('lodash');
 var logoUrl = require('./logo.png');
-<<<<<<< HEAD
-=======
 var configFile = require('../timelion.json');
 var moment = require('moment-timezone');
->>>>>>> 0f0d63c... Correctly use moment-timezone. Truely closes #86
 
 require('angularSortableView');
 
