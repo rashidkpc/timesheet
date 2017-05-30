@@ -299,23 +299,11 @@ color | *string* | Color of axis label
 
 Argument | Accepts | Description
 --- | --- | ---
-alpha | *number* | 
-        Smoothing weight from 0 to 1.
-        Increasing alpha will make the new series more closely follow the original.
-        Lowering it will make the series smoother  
-beta | *number* | 
-        Trending weight from 0 to 1.
-        Increasing beta will make rising/falling lines continue to rise/fall longer.
-        Lowering it will make the function learn the new trend faster  
-gamma | *number* | 
-        Seasonal weight from 0 to 1. Does your data look like a wave?
-        Increasing this will give recent seasons more importance, thus changing the wave form faster.
-        Lowering it will reduce the importance of new seasons, making history more important.
-          
+alpha | *number* | Smoothing weight from 0 to 1. Increasing alpha will make the new series more closely follow the original. Lowering it will make the series smoother  
+beta | *number* | Trending weight from 0 to 1. Increasing beta will make rising/falling lines continue to rise/fall longer. Lowering it will make the function learn the new trend faster  
+gamma | *number* | Seasonal weight from 0 to 1. Does your data look like a wave? Increasing this will give recent seasons more importance, thus changing the wave form faster. Lowering it will reduce the importance of new seasons, making history more important.
 season | *string* | How long is the season, eg, 1w if you pattern repeats weekly. (Only useful with gamma)  
-sample | *number* | 
-      The number of seasons to sample before starting to "predict" in a seasonal series.
-      (Only useful with gamma, Default: all)  
+sample | *number* | The number of seasons to sample before starting to "predict" in a seasonal series. (Only useful with gamma, Default: all)  
 
 #### .trend()
 Draws a trend line using a specified regression algorithm
